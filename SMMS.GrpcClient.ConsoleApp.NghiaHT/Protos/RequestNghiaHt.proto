@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "SMMS.GrpcService.NghiaHT.Protos";
+option csharp_namespace = "SMMS.GrpcClient.ConsoleApp.NghiaHT.Protos";
 
 service RequestGRPC
 {

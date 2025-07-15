@@ -67,7 +67,7 @@ namespace SMMS.GrpcService.NghiaHT.Services
         {
             //try
             //{
-            var requestNghiaHt = await _serviceProviders.RequestNghiaHtService.GetByIdAsync(int.Parse(request.RequestNghiaHtId));
+            var requestNghiaHt = await _serviceProviders.RequestNghiaHtService.GetByIdAsync(request.RequestNghiaHtId);
 
 
             //    var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
@@ -172,5 +172,20 @@ namespace SMMS.GrpcService.NghiaHT.Services
 
             return new MutationResult() { Result = 0 };
         }
+
+        public override async Task<MutationResult> DeleteAsync(RequestNghiaHtIdRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var result = await _serviceProviders.RequestNghiaHtService.DeleteAsync(request.RequestNghiaHtId);
+
+                return new MutationResult() { Result = result ? 1 : 0 };
+
+            }
+            catch (Exception ex) { }
+
+            return new MutationResult() { Result = 0 };
+        }
+
     }
 }
