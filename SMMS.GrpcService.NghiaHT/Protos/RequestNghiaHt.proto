@@ -7,6 +7,7 @@ service RequestGRPC
 	rpc GetAllAsync(EmptyRequest) returns (RequestNghiaHtList);
 	rpc GetByIdAsync(RequestNghiaHtIdRequest) returns (RequestNghiaHt);
 	rpc CreateAsync(RequestNghiaHt) returns (MutationResult);
+	rpc UpdateAsync(RequestNghiaHt) returns (MutationResult);
 }
 
 message EmptyRequest {}

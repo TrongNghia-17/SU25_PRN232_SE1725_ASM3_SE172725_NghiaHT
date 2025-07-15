@@ -135,5 +135,42 @@ namespace SMMS.GrpcService.NghiaHT.Services
 
             return new MutationResult() { Result = 0 };
         }
+
+        public override async Task<MutationResult> UpdateAsync(SMMS.GrpcService.NghiaHT.Protos.RequestNghiaHt request, ServerCallContext context)
+        {
+            try
+            {
+
+                //var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
+
+                //var protoJsonString = JsonSerializer.Serialize(request, opt);
+
+
+                //var item = JsonSerializer.Deserialize<SMMS.Repositories.NghiaHT.Models.RequestNghiaHt>(protoJsonString, opt);
+
+                var item = new SMMS.Repositories.NghiaHT.Models.RequestNghiaHt
+                {
+                    RequestNghiaHtid = request.RequestNghiaHtId,
+                    MedicationCategoryQuanTnid = request.MedicationCategoryQuanTnId,
+                    MedicationName = request.MedicationName,
+                    Dosage = request.Dosage,
+                    Frequency = request.Frequency,
+                    Reason = request.Reason,
+                    Instruction = request.Instruction,
+                    Quantity = request.Quantity,
+                    Indications = request.Indications,
+                    CreatedDate = string.IsNullOrEmpty(request.CreatedDate) ? null : DateTime.Parse(request.CreatedDate),
+                    IsApproved = request.IsApproved
+                };
+
+                var result = await _serviceProviders.RequestNghiaHtService.UpdateAsync(item);
+
+                return new MutationResult() { Result = result };
+            }
+            catch (Exception ex) { }
+
+            return new MutationResult() { Result = 0 };
+        }
     }
 }
