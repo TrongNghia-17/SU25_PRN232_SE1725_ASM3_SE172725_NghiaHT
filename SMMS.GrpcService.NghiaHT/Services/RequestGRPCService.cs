@@ -100,26 +100,40 @@ namespace SMMS.GrpcService.NghiaHT.Services
             };
         }
 
-        //public override async Task<MutationResult> CreateAsync(RequestNghiaHt request, ServerCallContext context)
-        //{
-        //    try
-        //    {
+        public override async Task<MutationResult> CreateAsync(SMMS.GrpcService.NghiaHT.Protos.RequestNghiaHt request, ServerCallContext context)
+        {
+            try
+            {
 
-        //        var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-
-
-        //        var protoJsonString = JsonSerializer.Serialize(request, opt);
+                //var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
 
-        //        var item = JsonSerializer.Deserialize<SMMS.Repositories.NghiaHT.Models.RequestNghiaHt>(protoJsonString, opt);
+                //var protoJsonString = JsonSerializer.Serialize(request, opt);
 
-        //        var result = await _serviceProviders.RequestNghiaHtService.CreateAsync(item);
 
-        //        return new MutationResult() { Result = result };
-        //    }
-        //    catch (Exception ex) { }
+                //var item = JsonSerializer.Deserialize<SMMS.Repositories.NghiaHT.Models.RequestNghiaHt>(protoJsonString, opt);
 
-        //    return new MutationResult() { Result = 0 };
-        //}
+                var item = new SMMS.Repositories.NghiaHT.Models.RequestNghiaHt
+                {
+                    MedicationCategoryQuanTnid = request.MedicationCategoryQuanTnId,
+                    MedicationName = request.MedicationName,
+                    Dosage = request.Dosage,
+                    Frequency = request.Frequency,
+                    Reason = request.Reason,
+                    Instruction = request.Instruction,
+                    Quantity = request.Quantity,
+                    Indications = request.Indications,
+                    CreatedDate = string.IsNullOrEmpty(request.CreatedDate) ? null : DateTime.Parse(request.CreatedDate),
+                    IsApproved = request.IsApproved
+                };
+
+                var result = await _serviceProviders.RequestNghiaHtService.CreateAsync(item);
+
+                return new MutationResult() { Result = result };
+            }
+            catch (Exception ex) { }
+
+            return new MutationResult() { Result = 0 };
+        }
     }
 }
