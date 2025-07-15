@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using SMMS.GrpcService.NghiaHT.Protos;
+using SMMS.Repositories.NghiaHT.Models;
 using SMMS.Services.NghiaHT;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -62,48 +63,63 @@ namespace SMMS.GrpcService.NghiaHT.Services
             return result;
         }
 
-        public override async Task<RequestNghiaHt> GetByIdAsync(RequestNghiaHtIdRequest request, ServerCallContext context)
+        public override async Task<SMMS.GrpcService.NghiaHT.Protos.RequestNghiaHt> GetByIdAsync(RequestNghiaHtIdRequest request, ServerCallContext context)
         {
-            try
+            //try
+            //{
+            var requestNghiaHt = await _serviceProviders.RequestNghiaHtService.GetByIdAsync(int.Parse(request.RequestNghiaHtId));
+
+
+            //    var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
+
+            //    var cashDepositSlipJsonString = JsonSerializer.Serialize(requestNghiaHt, opt);
+
+
+            //    var item = JsonSerializer.Deserialize<RequestNghiaHt>(cashDepositSlipJsonString, opt);
+
+            //    return item;
+            //}
+            //catch (Exception ex) { }
+
+            //return new RequestNghiaHt();
+
+            return new SMMS.GrpcService.NghiaHT.Protos.RequestNghiaHt
             {
-                //var requestNghiaHt = await _serviceProviders.RequestNghiaHtService.GetByIdAsync(int.Parse(request.RequestNghiaHtId));
-
-
-                //var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-
-
-                //var cashDepositSlipJsonString = JsonSerializer.Serialize(requestNghiaHt, opt);
-
-
-                //var item = JsonSerializer.Deserialize<RequestNghiaHt>(cashDepositSlipJsonString, opt);
-
-                //return item;
-            }
-            catch (Exception ex) { }
-
-            return new RequestNghiaHt();
+                RequestNghiaHtId = requestNghiaHt.RequestNghiaHtid,
+                MedicationCategoryQuanTnId = requestNghiaHt.MedicationCategoryQuanTnid ?? 0,
+                MedicationName = requestNghiaHt.MedicationName ?? string.Empty,
+                Dosage = requestNghiaHt.Dosage ?? string.Empty,
+                Frequency = requestNghiaHt.Frequency ?? string.Empty,
+                Reason = requestNghiaHt.Reason ?? string.Empty,
+                Instruction = requestNghiaHt.Instruction ?? string.Empty,
+                Quantity = requestNghiaHt.Quantity ?? 0,
+                Indications = requestNghiaHt.Indications ?? string.Empty,
+                CreatedDate = requestNghiaHt.CreatedDate?.ToString("o") ?? string.Empty,
+                IsApproved = requestNghiaHt.IsApproved
+            };
         }
 
-        public override async Task<MutationResult> CreateAsync(RequestNghiaHt request, ServerCallContext context)
-        {
-            try
-            {
+        //public override async Task<MutationResult> CreateAsync(RequestNghiaHt request, ServerCallContext context)
+        //{
+        //    try
+        //    {
 
-                var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-
-
-                var protoJsonString = JsonSerializer.Serialize(request, opt);
+        //        var opt = new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
 
-                var item = JsonSerializer.Deserialize<SMMS.Repositories.NghiaHT.Models.RequestNghiaHt>(protoJsonString, opt);
+        //        var protoJsonString = JsonSerializer.Serialize(request, opt);
 
-                var result = await _serviceProviders.RequestNghiaHtService.CreateAsync(item);
 
-                return new MutationResult() { Result = result };
-            }
-            catch (Exception ex) { }
+        //        var item = JsonSerializer.Deserialize<SMMS.Repositories.NghiaHT.Models.RequestNghiaHt>(protoJsonString, opt);
 
-            return new MutationResult() { Result = 0 };
-        }
+        //        var result = await _serviceProviders.RequestNghiaHtService.CreateAsync(item);
+
+        //        return new MutationResult() { Result = result };
+        //    }
+        //    catch (Exception ex) { }
+
+        //    return new MutationResult() { Result = 0 };
+        //}
     }
 }
