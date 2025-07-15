@@ -1,0 +1,42 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "SMMS.GrpcService.NghiaHT.Protos";
+
+service RequestGRPC
+{
+	rpc GetAllAsync(EmptyRequest) returns (RequestNghiaHtList);
+	rpc GetByIdAsync(RequestNghiaHtIdRequest) returns (RequestNghiaHt);
+	rpc CreateAsync(RequestNghiaHt) returns (MutationResult);
+}
+
+message EmptyRequest {}
+
+message RequestNghiaHtList
+{
+	repeated RequestNghiaHt Items = 1;
+}
+
+message RequestNghiaHt
+{
+  int32 request_nghia_ht_id = 1;
+  int32 medication_category_quan_tn_id = 2;
+  string medication_name = 3;
+  string dosage = 4;
+  string frequency = 5;
+  string reason = 6;
+  string instruction = 7;
+  int32 quantity = 9; 
+  string indications = 11;
+  string created_date = 13; 
+  bool is_approved = 15;
+}
+
+message RequestNghiaHtIdRequest
+{	
+	string RequestNghiaHtId = 1;
+}
+
+message MutationResult
+{
+	int32 result = 1;
+}
